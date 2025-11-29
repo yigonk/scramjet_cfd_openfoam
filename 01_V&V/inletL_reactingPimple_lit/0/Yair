@@ -1,0 +1,64 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      Yair;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 1;
+
+boundaryField
+{
+    P.Inlet
+    {
+        // Inlet is pure air
+        type        fixedValue;
+        value       uniform 1;
+    }
+
+    P.Outlet
+    {
+        // Let outlet value be set by interior
+        type        zeroGradient;
+    }
+
+    Farfield
+    {
+        // Freestream: also pure air
+        type        fixedValue;
+        value       uniform 1;
+    }
+
+    Wall
+    {
+        // No flux of species through inviscid wall
+        type        zeroGradient;
+    }
+
+    Symmetry
+    {
+        type        symmetryPlane;
+    }
+
+    patch0
+    {
+        type        empty;
+    }
+
+    patch3
+    {
+        type        empty;
+    }
+}
