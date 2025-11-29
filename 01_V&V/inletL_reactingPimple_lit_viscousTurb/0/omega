@@ -9,20 +9,56 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      turbulenceProperties;
+    class       volScalarField;
+    object      omega;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  RASModel;
+dimensions      [0 0 -1 0 0 0 0];
 
-RAS
+// Length scale of 1 cm paired with k above ⇒ omega ≈ 177.2 1/s
+internalField   uniform 177.175;
+
+boundaryField
 {
-    RASModel        kOmegaSST;
-    turbulence      on;
-    printCoeffs     on;
-}
+    P.Inlet
+    {
+        type        fixedValue;
+        value       uniform 177.175;
+    }
 
+    P.Outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 177.175;
+        value           uniform 177.175;
+    }
+
+    Farfield
+    {
+        type        zeroGradient;
+    }
+
+    Wall
+    {
+        type            omegaWallFunction;
+        value           uniform 177.175;
+    }
+
+    Symmetry
+    {
+        type        symmetryPlane;
+    }
+
+    patch0
+    {
+        type        empty;
+    }
+
+    patch3
+    {
+        type        empty;
+    }
+}
 
 // ************************************************************************* //

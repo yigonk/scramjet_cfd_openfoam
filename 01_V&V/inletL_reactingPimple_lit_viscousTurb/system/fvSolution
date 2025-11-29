@@ -17,11 +17,26 @@ FoamFile
 
 solvers
 {
-
-	"(rho|U|h|p|Ydefault).*"
+    "(rho|U|h|p|Ydefault).*"
     {
         solver          PBiCGStab;
-        preconditioner	DILU;
+        preconditioner  DILU;
+        tolerance       1e-08;
+        relTol          0.0;
+    }
+
+    k
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-08;
+        relTol          0.0;
+    }
+
+    omega
+    {
+        solver          PBiCGStab;
+        preconditioner  DILU;
         tolerance       1e-08;
         relTol          0.0;
     }
@@ -29,20 +44,20 @@ solvers
 
 PIMPLE
 {
-momentumPredictor false; 
-nCorrectors 1; 
-nOuterCorrectors 3; 
-nonOrthogonalityThreshold 60; 
-skewnessThreshold 0.5; 
-updateEnergyInPISO false; 
-fluxScheme Kurganov; 
+    momentumPredictor false;
+    nCorrectors 1;
+    nOuterCorrectors 3;
+    nonOrthogonalityThreshold 60;
+    skewnessThreshold 0.5;
+    updateEnergyInPISO false;
+    fluxScheme Kurganov;
 
-kappaFunction 
-{ 
-type   standardMachToAcCourantRatio; 
+    kappaFunction
+    {
+        type   standardMachToAcCourantRatio;
 
-standardMachToAcCourantRatioCoeffs {};
-}
+        standardMachToAcCourantRatioCoeffs {};
+    }
 
 }
 

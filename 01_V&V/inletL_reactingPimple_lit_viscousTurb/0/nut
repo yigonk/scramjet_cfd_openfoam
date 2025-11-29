@@ -9,20 +9,54 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      turbulenceProperties;
+    class       volScalarField;
+    object      nut;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  RASModel;
+dimensions      [0 2 -1 0 0 0 0];
 
-RAS
+// nut ≈ k/omega using the inlet estimates above
+internalField   uniform 0.00531525;
+
+boundaryField
 {
-    RASModel        kOmegaSST;
-    turbulence      on;
-    printCoeffs     on;
-}
+    P.Inlet
+    {
+        type        calculated;
+        value       uniform 0.00531525;
+    }
 
+    P.Outlet
+    {
+        type        zeroGradient;
+    }
+
+    Farfield
+    {
+        type        zeroGradient;
+    }
+
+    Wall
+    {
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
+
+    Symmetry
+    {
+        type        symmetryPlane;
+    }
+
+    patch0
+    {
+        type        empty;
+    }
+
+    patch3
+    {
+        type        empty;
+    }
+}
 
 // ************************************************************************* //

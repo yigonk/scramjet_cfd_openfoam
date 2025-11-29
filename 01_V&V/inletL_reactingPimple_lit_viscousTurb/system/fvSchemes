@@ -52,6 +52,10 @@ divSchemes
     // mixture component transport equation
     div(phi_nei,Yi)                             Gauss $defaultAdvScheme;
     div(phi_own,Yi)                             Gauss $defaultAdvScheme;
+
+    // turbulence
+    div(phi,k)                                  Gauss $defaultAdvScheme;
+    div(phi,omega)                              Gauss $defaultAdvScheme;
 }
 
 laplacianSchemes
@@ -97,6 +101,8 @@ relaxationFactors
         h       0.5;
         T       0.5;
         rho     0.5;
+        k       0.5;
+        omega   0.5;
     }
 }
 

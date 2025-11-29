@@ -18,7 +18,8 @@ thermodynamics
 
 transport
 {
-	mu	0;
+	// Dynamic viscosity from Sutherland's law at 62.5 K
+	mu	4.17e-06;
 	Pr	0.71;
 }
 

@@ -9,20 +9,56 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      turbulenceProperties;
+    class       volScalarField;
+    object      k;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-simulationType  RASModel;
+dimensions      [0 2 -2 0 0 0 0];
 
-RAS
+// 0.1% turbulence intensity on 792.35 m/s stream ⇒ k ≈ 0.942 m^2/s^2
+internalField   uniform 0.941728;
+
+boundaryField
 {
-    RASModel        kOmegaSST;
-    turbulence      on;
-    printCoeffs     on;
-}
+    P.Inlet
+    {
+        type        fixedValue;
+        value       uniform 0.941728;
+    }
 
+    P.Outlet
+    {
+        type            inletOutlet;
+        inletValue      uniform 0.941728;
+        value           uniform 0.941728;
+    }
+
+    Farfield
+    {
+        type        zeroGradient;
+    }
+
+    Wall
+    {
+        type            kqRWallFunction;
+        value           uniform 0;
+    }
+
+    Symmetry
+    {
+        type        symmetryPlane;
+    }
+
+    patch0
+    {
+        type        empty;
+    }
+
+    patch3
+    {
+        type        empty;
+    }
+}
 
 // ************************************************************************* //

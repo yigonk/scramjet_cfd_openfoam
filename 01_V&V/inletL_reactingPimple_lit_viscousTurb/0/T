@@ -41,7 +41,7 @@ boundaryField
 
     Wall
     {
-        // Inviscid, adiabatic wall
+        // Adiabatic viscous wall
         type        zeroGradient;
     }
 
