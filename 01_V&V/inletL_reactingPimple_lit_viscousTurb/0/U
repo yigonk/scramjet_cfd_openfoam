@@ -41,8 +41,7 @@ boundaryField
 
     Wall
     {
-        // Inviscid assumption → slip wall
-        type        slip;
+        type        noSlip;
     }
 
     Symmetry
