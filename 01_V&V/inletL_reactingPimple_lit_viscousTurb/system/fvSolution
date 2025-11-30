@@ -40,6 +40,22 @@ solvers
         tolerance       1e-08;
         relTol          0.0;
     }
+    omegaFinal
+    {
+        solver          DILUPBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    kFinal
+    {
+        solver          DILUPBiCGStab;
+        preconditioner  DILU;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
 }
 
 PIMPLE
