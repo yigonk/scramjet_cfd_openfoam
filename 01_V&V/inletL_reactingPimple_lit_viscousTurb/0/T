@@ -29,9 +29,7 @@ boundaryField
 
     P.Outlet
     {
-        type            inletOutlet;
-        inletValue      uniform 62.5;
-        value           uniform 62.5;
+        type        zeroGradient;
     }
 
     Farfield
