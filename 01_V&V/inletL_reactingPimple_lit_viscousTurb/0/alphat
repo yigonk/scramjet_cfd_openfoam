@@ -16,14 +16,14 @@ FoamFile
 
 dimensions      [1 -1 -1 0 0 0 0];
 
-internalField   uniform 7.1e-5;
+internalField   uniform 4.86e-5;
 
 boundaryField
 {
     P.Inlet
     {
         type        calculated;
-        value       uniform 7.1e-5;
+        value       uniform 4.86e-5;
     }
 
     P.Outlet
