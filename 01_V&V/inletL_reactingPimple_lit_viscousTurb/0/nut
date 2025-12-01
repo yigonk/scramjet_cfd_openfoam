@@ -17,14 +17,14 @@ FoamFile
 dimensions      [0 2 -1 0 0 0 0];
 
 // nut ≈ k/omega using the inlet estimates above
-internalField   uniform 0;
+internalField   uniform 6.03e-5;
 
 boundaryField
 {
     P.Inlet
     {
         type        calculated;
-        value       uniform 0;
+        value       uniform 6.03e-5;
     }
 
     P.Outlet
