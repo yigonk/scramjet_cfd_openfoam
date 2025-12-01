@@ -15,102 +15,81 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+fluxScheme   Kurganov;
+
 ddtSchemes
 {
-    default         Euler;
+    default     Euler;
 }
 
 gradSchemes
 {
-    default         Gauss linear;
+    default     Gauss linear;
 }
-
-defaultAdvScheme     upwind;
-defaultAdvSchemeV    upwind;
 
 divSchemes
 {
-    default         none;
+    default     none;
+    div(tauMC)  Gauss linear;
 
-    // momentum equation
-    div(phi_nei,U)                              Gauss $defaultAdvSchemeV;
-    div(phi_own,U)                              Gauss $defaultAdvSchemeV;
-    div(((rho*nuEff)*dev2(T(grad(U)))))         Gauss linear;
+    div(phi_nei,U)   Gauss vanLeerV;
+    div(phi_own,U)   Gauss vanLeerV;
+    div(((rho*nuEff)*dev2(T(grad(U)))))    Gauss linear;
 
-    // energy equation (enthalpy)
-    div(phi_nei,h)                              Gauss $defaultAdvScheme;
-    div(phi_own,h)                              Gauss $defaultAdvScheme;
-    div(phi_nei,K)                              Gauss $defaultAdvScheme;
-    div(phi_own,K)                              Gauss $defaultAdvScheme;
-    div(alphaEff*hi,grad(Yi))                   Gauss linear;
-    div(rhoi*Uri,hi)                            Gauss linear;
+    div(phi_nei,h)   Gauss vanLeer;
+    div(phi_own,h)   Gauss vanLeer;
+    div(phi_nei,K)   Gauss vanLeer;
+    div(phi_own,K)   Gauss vanLeer;
+    div(alphaEff*hi,grad(Yi))   Gauss linear;
+    div(rhoi*Uri,hi)   Gauss linear;
+    div(phi,k)    bounded Gauss upwind;
+    div(phi,omega)    bounded Gauss upwind;
 
-    // continuity equation
-    div(phid_nei,p)                             Gauss $defaultAdvScheme;
-    div(phid_own,p)                             Gauss $defaultAdvScheme;
-    
-    // mixture component transport equation
-    div(phi_nei,Yi)                             Gauss $defaultAdvScheme;
-    div(phi_own,Yi)                             Gauss $defaultAdvScheme;
+    div(phid_nei,p)   Gauss vanLeer;
+    div(phid_own,p)   Gauss vanLeer;
 
-    // turbulence
-    div(phi,k)                                  Gauss $defaultAdvScheme;
-    div(phi,omega)                              Gauss $defaultAdvScheme;
+    div(phi_nei,Yi)   Gauss vanLeer;
+    div(phi_own,Yi)   Gauss vanLeer;
 }
 
 laplacianSchemes
 {
-    default         Gauss linear corrected;
+    default     Gauss linear corrected;
 }
 
 interpolationSchemes
 {
-    default         none;
+    default     linear;
+    interpolate((rho*U))    linear;
 
-    interpolate(rho)      linear;
-    interpolate((rho*U))                        linear;
-    interpolate(((rho*nut)+thermo:mu))         linear;
-    
-    reconstruct(rho)                            $defaultAdvScheme;
-    reconstruct(psi)                            $defaultAdvScheme;
-    reconstruct(p)                              $defaultAdvScheme;
-    reconstruct(U)                              $defaultAdvSchemeV;
-    reconstruct(rho*U)                          $defaultAdvSchemeV;
-    reconstruct(Dp)                             $defaultAdvScheme;
+    reconstruct(rho)    vanLeer;
+    reconstruct(U)      vanLeerV;
+    reconstruct(psi)    vanLeer;
+    reconstruct(p)      vanLeer;
+    reconstruct(rho*U)  vanLeerV;
+    reconstruct(Dp)     vanLeer;
+
 }
 
 snGradSchemes
 {
-    default         corrected;
+    default     corrected;
+
+}
+
+wallDist
+{
+    method meshWave;
+
 }
 
 fluxRequired
 {
-    default     none;
+    default none;
     p;
     h;
     Yi;
 
 }
-
-relaxationFactors
-{
-    equations
-    {
-        p       0.3;
-        U       0.5;
-        h       0.5;
-        T       0.5;
-        rho     0.5;
-        k       0.5;
-        omega   0.5;
-    }
-}
-
-wallDist
-{
-    method  meshWave;
-}
-
 
 // ************************************************************************* //
